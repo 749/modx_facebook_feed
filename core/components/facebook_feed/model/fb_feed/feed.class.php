@@ -1,5 +1,5 @@
 <?php
-include '../Facebook/autoload.php';
+require_once __DIR__.'/../Facebook/autoload.php';
 
 class Feed {
   /**
@@ -50,13 +50,8 @@ class Feed {
       'app_secret' => $this->config['app_secret'],
       'default_graph_version' => 'v2.8',
     ]);
-    $request = new Facebook\FacebookRequest(
-      $fb->getApp(),
-      'GET',
-      '/'.$config['page'].'/feed?fields=full_picture,created_time,id,message,description,story,likes.limit(2).summary(true),shares,comments_mirroring_domain,comments,link&summary=true&limit='.$config['limit']
-    );
-    $response = $request->execute();
-    $graphObject = $response->getGraphObject();
+    $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,created_time,id,message,description,story,likes.limit(2).summary(true),shares,comments_mirroring_domain,comments,link&summary=true&limit=' . $config['limit']);
+    $graphObject = $response->getGraphEdge();
     $output = print_r($graphObject, true);
     return $output;
   }

@@ -38,6 +38,24 @@ $builder = new modPackageBuilder($modx);
 $builder->createPackage('facebook_feed','0.1.3','alpha');
 $builder->registerNamespace('facebook_feed',false,true,'{core_path}components/facebook_feed/');
 
+/* load action/menu */
+$menu = include $sources['data'].'transport.menu.php';
+$vehicle= $builder->createVehicle($menu,array (
+    xPDOTransport::PRESERVE_KEYS => true,
+    xPDOTransport::UPDATE_OBJECT => true,
+    xPDOTransport::UNIQUE_KEY => 'text',
+    xPDOTransport::RELATED_OBJECTS => true,
+    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+        'Action' => array (
+            xPDOTransport::PRESERVE_KEYS => false,
+            xPDOTransport::UPDATE_OBJECT => true,
+            xPDOTransport::UNIQUE_KEY => array ('namespace','controller'),
+        ),
+    ),
+));
+$builder->putVehicle($vehicle);
+unset($vehicle,$action);
+
 
 /* load system settings */
 $settings = include $sources['data'].'transport.settings.php';
