@@ -6,8 +6,10 @@ class Facebook_feedHomeManagerController extends Facebook_feedManagerController 
      * @param array $scriptProperties
      */
     public function process(array $scriptProperties = array()) {
-      $data = $this->feed->getPages();
-      return '<p><a href="javascript:" id="FB_Login">Login with Facebook</a></p>'.print_r($data, true);
+      $output = '';
+      if($this->feed->generateAccessToken())
+        $output .= '<p>Successfully updated Access Token.</p>';
+      return $output;
     }
     /**
      * The pagetitle to put in the <title> attribute.
@@ -22,7 +24,7 @@ class Facebook_feedHomeManagerController extends Facebook_feedManagerController 
      */
     public function loadCustomCssJs() {
         /*$this->addCss('url/to/some/css_file.css');
-        $this->addJavascript('url/to/some/javascript.js');*/
+        $this->addJavascript('url/to/some/javascript.js');
         $this->addJavascript($this->feed->config['jsUrl'].'feed.js');
         $this->addHtml('<script type="text/javascript">
         window.fbAsyncInit = function() {
@@ -48,6 +50,6 @@ class Facebook_feedHomeManagerController extends Facebook_feedManagerController 
             fjs.parentNode.insertBefore(js, fjs);
           }(document, \'script\', \'facebook-jssdk\'));
         });
-        </script>');
+        </script>');*/
     }
 }
