@@ -11,12 +11,12 @@ abstract class Facebook_feedManagerController extends modExtraManagerController 
         $this->feed = new Feed($this->modx);
         //$this->addCss($this->quip->config['cssUrl'].'mgr.css');
         //$this->addJavascript($this->quip->config['jsUrl'].'quip.js');
-        //$this->addHtml('<script type="text/javascript">
-        //Ext.onReady(function() {
-        //    Quip.config = '.$this->modx->toJSON($this->quip->config).';
-        //    Quip.config.connector_url = "'.$this->quip->config['connectorUrl'].'";
-        //});
-        //</script>');
+        $this->addHtml('<script type="text/javascript">
+        Ext.onReady(function() {
+            FB_Feed.config = '.$this->modx->toJSON($this->feed->config).';
+            FB_Feed.config.connector_url = "'.$this->feed->config['connectorUrl'].'";
+        });
+        </script>');
         return parent::initialize();
     }
     public function getLanguageTopics() {

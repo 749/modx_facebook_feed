@@ -6,7 +6,8 @@ class Facebook_feedHomeManagerController extends Facebook_feedManagerController 
      * @param array $scriptProperties
      */
     public function process(array $scriptProperties = array()) {
-        
+      $data = $this->feed->getPages();
+      return '<p><a href="javascript:" id="FB_Login">Login with Facebook</a></p>'.print_r($data, true);
     }
     /**
      * The pagetitle to put in the <title> attribute.
@@ -21,13 +22,32 @@ class Facebook_feedHomeManagerController extends Facebook_feedManagerController 
      */
     public function loadCustomCssJs() {
         /*$this->addCss('url/to/some/css_file.css');
-        $this->addJavascript('url/to/some/javascript.js');
-        $this->addLastJavascript('url/to/some/javascript_load_last.js');
+        $this->addJavascript('url/to/some/javascript.js');*/
+        $this->addJavascript($this->feed->config['jsUrl'].'feed.js');
         $this->addHtml('<script type="text/javascript">
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId  : \''.$this->feed->config['app_id'].'\',
+            xfbml  : false,
+            version: \'v2.8\'
+          });
+          FB.getLoginStatus(function(status){
+            if (response.status === \'connected\') {
+              //remove login button
+              var elem = document.getElementById("FB_Login").parentNode;
+              elem.parentNode.removeChild(elem);
+            }
+          });
+        };
         Ext.onReady(function() {
-            // We could run some javascript here
+          (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, \'script\', \'facebook-jssdk\'));
         });
-        </script>');*/
+        </script>');
     }
-    public function getTemplateFile() { return $this->feed->config['templatesPath'].'home.tpl';  }
 }
