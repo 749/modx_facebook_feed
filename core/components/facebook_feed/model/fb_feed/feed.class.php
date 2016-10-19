@@ -80,7 +80,7 @@ class Feed {
   public function checkToken($token) {
     $identifier = 'access_token=';
     if(substr($token, 0, strlen($identifier)) === $identifier){
-      $token = substr($token, strlen($identifier) + 1);
+      $token = substr($token, strlen($identifier));
     }
     if(strlen($token) == 0){
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Error: Tried to install empty token');
