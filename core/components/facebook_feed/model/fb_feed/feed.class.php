@@ -1,4 +1,22 @@
 <?php
+/**
+ * ModX Facebook Feed
+ * Allows you to easily display a Facebook pages' feed on your website.
+ * Copyright (C) 2016  Jan Giesenberg <giesenja@gmail.com>
+ *
+ * ModX Facebook Feed is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ModX Facebook Feed is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ModX Facebook Feed.  If not, see <http://www.gnu.org/licenses/>.
+ */
 require_once __DIR__.'/../Facebook/autoload.php';
 
 class Feed {
@@ -55,9 +73,32 @@ class Feed {
     ]);
   }
 
+  public function getTokenURL() {
+    return 'https://graph.facebook.com/oauth/access_token?client_id=' . $this->config['app_id'] . '&client_secret=' . $this->app_secret . '&grant_type=client_credentials';
+  }
+
+  public function checkToken($token) {
+    $identifier = 'access_token=';
+    if(substr($token, 0, strlen($identifier)) === $identifier){
+      $token = substr($token, strlen($identifier) + 1);
+    }
+    if(strlen($token) == 0){
+      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Error: Tried to install empty token');
+      return false;
+    }
+
+    $setting = $this->modx->getObject('modSystemSetting',array('key' => 'facebook_feed.access_token'));
+    if ($setting != null) {
+      $setting->set('value',$token);
+      $setting->save();
+      return true;
+    }
+    return false;
+  }
+
   public function generateAccessToken() {
     $curl = curl_init();
-    $url = 'https://graph.facebook.com/oauth/access_token?client_id='.$this->config['app_id'].'&client_secret='.$this->app_secret.'&grant_type=client_credentials';
+    $url = $this->getTokenURL();
     //echo '<pre>'.$url.'</pre>';
     curl_setopt_array($curl, array(
       CURLOPT_RETURNTRANSFER => 1,
@@ -67,19 +108,11 @@ class Feed {
     ));
     $result = curl_exec($curl);
     if(!$result){
-      $xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
+      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
       return false;
     }
     curl_close($curl);
-    $token = substr($result, strpos($result, '=') + 1);
-
-    $setting = $this->modx->getObject('modSystemSetting',array('key' => 'facebook_feed.access_token'));
-    if ($setting != null) {
-      $setting->set('value',$options['app_id']);
-      $setting->save();
-      return true;
-    }
-    return false;
+    return $this->checkToken($result);
   }
 
   function calcTimeAgo($time) {

@@ -1,0 +1,16 @@
+TODO
+====
+* write documentation on how to setup
+* improve the token request manager package
+
+
+Might do
+========
+* get the number of comments per post
+
+
+
+Version 0.2.0-beta
+==================
+* basic functionality working
+* added a way to request a client Token from the manager
