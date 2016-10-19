@@ -23,3 +23,7 @@ Installation
 4. Use the Facebook Feed manager page to request a valid access token from
    facebook
 5. Use the provided snippet to display a Feed on your page
+
+
+ModX Extra ID
+58075fc3bc8dd305248b4567-58075fc3bc8dd305248b4568
