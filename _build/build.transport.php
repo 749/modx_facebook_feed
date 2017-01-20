@@ -35,7 +35,7 @@ $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
-$builder->createPackage('facebook_feed','0.2.1','beta');
+$builder->createPackage('facebook_feed','0.2.2','beta');
 $builder->registerNamespace('facebook_feed',false,true,'{core_path}components/facebook_feed/');
 
 /* load action/menu */
