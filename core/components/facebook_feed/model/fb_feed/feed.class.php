@@ -209,7 +209,7 @@ class Feed {
       $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=' . $config['limit']);
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
-      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->message);
+      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
       return '';
     } catch(Facebook\Exceptions\FacebookSDKException $e) {
       // When validation fails or other local issues

@@ -18,8 +18,8 @@
  * along with ModX Facebook Feed.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Default English language strings for Login
- * @package login
+ * Default German language strings for facebook_feed
+ * @package facebook_feed
  * @subpackage lexicon
  */
 $_lang['facebook_feed'] = 'Facebook Feed';
