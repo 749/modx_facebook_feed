@@ -199,14 +199,24 @@ class Feed {
   function runFeed($scriptProperties) {
     $output = '';
     $config = array_merge(array(
-      'page' => '1',
+      'page' => '',
       'limit' => 30,
-      'tpl' => 'facebook_feed_tpl'
+      'tpl' => 'facebook_feed_tpl',
+      'authors' => ''
     ), $scriptProperties);
+
+    if(!empty($config['authors'])) {
+      $authors = explode(',', $config['authors']);
+    }
+
+    if(empty($config['page'])) {
+      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'You have to give an id in the page parameter in order to use the snippet');
+      return '';
+    }
 
     $fb = $this->initFB();
     try{
-      $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=' . $config['limit']);
+      $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=' . $config['limit']);
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
@@ -217,9 +227,13 @@ class Feed {
       return '';
     }
     foreach ($data as $post) {
+      if(isset($authors) && !in_array($post['from']['id'], $authors)) {
+        continue;
+      }
       $pinfo = array();
       $pinfo['img'] = $post['full_picture'];
       $pinfo['name'] = $post['name'];
+      $pinfo['from'] = $post['from']['name'];
       $pinfo['link'] = $post['link'];
       $pinfo['time_ago'] = $this->calcTimeAgo($post['created_time']);
       $pinfo['likes'] = $this->humanNumber($post['likes']['summary']['total_count']);
