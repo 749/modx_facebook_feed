@@ -22,8 +22,10 @@ Installation
    of your Facebook app
 4. Use the Facebook Feed manager page to request a valid access token from
    facebook
-5. Use the provided snippet to display a Feed on your page
+5. You will need the id of the page you want to display.
+   Try http://findmyfbid.com to find to correct id of your page
+6. Use the provided snippet to display a Feed on your page ``[[!FB_Feed? &page=`<your page id>` &limit=`6`]]``
 
 
 ModX Extra ID
-58075fc3bc8dd305248b4567-58075fc3bc8dd305248b4568
+58075fc3bc8dd305248b4567-588210cdbc8dd32d338b4567
