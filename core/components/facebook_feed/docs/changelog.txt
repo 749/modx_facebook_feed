@@ -1,6 +1,7 @@
 TODO
 ====
-* write documentation on how to setup
+* add a chunk that will be displayed if an error occured
+  https://github.com/749/modx_facebook_feed/issues/4
 * improve the token request manager package
 
 
@@ -9,8 +10,19 @@ Might do
 * get the number of comments per post
 
 
+Version 0.2.3-beta
+==================
+* added the authors attribute to be able to select posts by authors
+  https://github.com/749/modx_facebook_feed/issues/2
+* improved documentation on github
 
-Version 0.2.0-beta
+Version 0.2.2-beta
+==================
+* Fixed a bug where error message would get through to the snippet see
+  https://github.com/749/modx_facebook_feed/issues/1
+  now all errors will be displayed in the modx error log
+
+Version 0.2.1-beta
 ==================
 * basic functionality working
 * added a way to request a client Token from the manager
