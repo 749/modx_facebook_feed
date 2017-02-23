@@ -25,8 +25,8 @@
 $_lang['facebook_feed'] = 'Facebook Feed';
 $_lang['facebook_feed_desc'] = 'Access Token erneuern';
 $_lang['facebook_feed.ago'] = ' vor';
-$_lang['facebook_feed.ago_days'] = '[[+days]] tage';
-$_lang['facebook_feed.ago_hours'] = '[[+hours]] stunden';
+$_lang['facebook_feed.ago_days'] = '[[+days]] Tagen';
+$_lang['facebook_feed.ago_hours'] = '[[+hours]] Stunden';
 $_lang['facebook_feed.ago_minutes'] = '[[+minutes]] min';
 $_lang['facebook_feed.ago_seconds'] = '[[+seconds]] sek';
 

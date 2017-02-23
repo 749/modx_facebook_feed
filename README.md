@@ -59,5 +59,47 @@ Further options are:
   Example: ``[[!FB_Feed? &page=`<your page id or shortname>` &tpl=`myfeedtpl`]]``
 
 
+Template Options
+----------------
+
+The default template for the snippet uses almost all fields available. The default template looks like this:
+
+```html
+<div class="post">
+  <img src="[[+img]]">
+  <p class="posted">by [[+name]] [[+time_ago]]</p>
+  <p>[[+message]]</p>
+  <p>Liked [[+likes]] times and shared [[+shares]] times. <a href="[[+link]]">View on Facebook</a></p>
+</div>
+```
+
+* ``[[+img]]``
+
+  Will insert the full url of the full_picture field of facebook
+
+* ``[[+name]]``
+
+  Will insert the publishers name from the name field of facebook
+
+* ``[[+time_ago]]``
+
+  Will insert a nicely formated time since posted from the created_time field of facebook
+
+* ``[[+message]]``
+
+  Will insert the message from the message or description field of facebook
+
+* ``[[+likes]]``
+
+  Will insert the number of likes as human readable number from the likes.summary.total_count field of facebook
+
+* ``[[+shares]]``
+
+  Will insert the number of shares as human readable number from the shares.count field of facebook
+
+* ``[[+link]]``
+
+  Will insert the full link to the facebook page from the link field of facebook
+
 ModX Extra ID
 58075fc3bc8dd305248b4567-588210cdbc8dd32d338b4567
