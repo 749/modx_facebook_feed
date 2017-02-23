@@ -58,6 +58,12 @@ Further options are:
 
   Example: ``[[!FB_Feed? &page=`<your page id or shortname>` &tpl=`myfeedtpl`]]``
 
+* ``&error_tpl=`<name of the template chunk>` ``
+
+  This option allows you to change the chunk that is used in case the facebook api calls fail
+
+  Example: ``[[!FB_Feed? &page=`<your page id or shortname>` &error_tpl=`myerrortpl`]]``
+
 
 Template Options
 ----------------

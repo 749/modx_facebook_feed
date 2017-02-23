@@ -202,7 +202,8 @@ class Feed {
       'page' => '',
       'limit' => 30,
       'tpl' => 'facebook_feed_tpl',
-      'authors' => ''
+      'authors' => '',
+      'error_tpl' => 'facebook_error_tpl'
     ), $scriptProperties);
 
     if(!empty($config['authors'])) {
@@ -211,7 +212,7 @@ class Feed {
 
     if(empty($config['page'])) {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'You have to give an id in the page parameter in order to use the snippet');
-      return '';
+      return $this->modx->getChunk($config['error_tpl']);
     }
 
     $fb = $this->initFB();
@@ -220,11 +221,11 @@ class Feed {
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
-      return '';
+      return $this->modx->getChunk($config['error_tpl']);
     } catch(Facebook\Exceptions\FacebookSDKException $e) {
       // When validation fails or other local issues
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Facebook SDK returned an error: ' . $e->getMessage());
-      return '';
+      return $this->modx->getChunk($config['error_tpl']);
     }
     foreach ($data as $post) {
       if(isset($authors) && !in_array($post['from']['id'], $authors)) {

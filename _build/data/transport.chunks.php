@@ -15,4 +15,13 @@ $chunks[1]->fromArray(array(
     'properties' => '',
 ),'',true,true);
 
+$chunks[2]= $modx->newObject('modChunk');
+$chunks[2]->fromArray(array(
+    'id' => 2,
+    'name' => 'facebook_error_tpl',
+    'description' => 'Default error template for the Facebook Feed',
+    'snippet' => file_get_contents($sources['source_core'].'/chunks/facebook_error_tpl.chunk.tpl'),
+    'properties' => '',
+),'',true,true);
+
 return $chunks;
