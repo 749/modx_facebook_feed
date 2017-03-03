@@ -24,6 +24,7 @@
  *
  * @param page The id of the page you want the feed to loaded from
  * @param limit The number of posts you want to display, maximum 100, default 30
+ * @param offset The number of posts from the beginning to be ignored, default 0
  * @param tpl The chunk to be used as template for the feed
  * @param authors Comma-separated list of allowed author ids eg: '1234,5678,91011'
  * @param error_tpl The chunk to be displayed in case the facebook api request fails

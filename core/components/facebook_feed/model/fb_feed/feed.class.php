@@ -203,7 +203,8 @@ class Feed {
       'limit' => 30,
       'tpl' => 'facebook_feed_tpl',
       'authors' => '',
-      'error_tpl' => 'facebook_error_tpl'
+      'error_tpl' => 'facebook_error_tpl',
+      'offset' => 0
     ), $scriptProperties);
 
     if(!empty($config['authors'])) {
@@ -217,7 +218,7 @@ class Feed {
 
     $fb = $this->initFB();
     try{
-      $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=' . $config['limit']);
+      $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=' . ($config['limit'] + $config['offset']));
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
@@ -227,6 +228,7 @@ class Feed {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Facebook SDK returned an error: ' . $e->getMessage());
       return $this->modx->getChunk($config['error_tpl']);
     }
+    $i = 0;
     foreach ($data as $post) {
       if(isset($authors) && !in_array($post['from']['id'], $authors)) {
         continue;
@@ -245,6 +247,11 @@ class Feed {
         $pinfo['message'] = nl2br($post['description']);
       } else {
         //ignore other types of posts
+        continue;
+      }
+      $i++;
+      if($i <= $config['offset']) {
+        // ignore this post
         continue;
       }
       $pinfo['message'] = $this->txt2link($pinfo['message'], array('target'=>'_blank', 'rel' => 'external nofollow'));

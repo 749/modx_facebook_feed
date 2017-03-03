@@ -1,4 +1,9 @@
 
+Version 0.2.6-beta
+==================
+* Added an offset property
+  https://github.com/749/modx_facebook_feed/issues/3
+
 Version 0.2.5-beta
 ==================
 * Make links in fb messages clickable
