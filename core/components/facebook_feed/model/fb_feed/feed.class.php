@@ -247,9 +247,33 @@ class Feed {
         //ignore other types of posts
         continue;
       }
+      $pinfo['message'] = $this->txt2link($pinfo['message'], array('target'=>'_blank', 'rel' => 'external nofollow'));
       $output .= $this->modx->getChunk($config['tpl'], $pinfo);
     }
     //$output .= print_r($data,true);
     return $output;
+  }
+
+  function txt2link($text, $attributes){
+  	// force http: on www.
+   	$text = ereg_replace( "www\.", "http://www.", $text );
+  	// eliminate duplicates after force
+    	$text = ereg_replace( "http://http://www\.", "http://www.", $text );
+    	$text = ereg_replace( "https://http://www\.", "https://www.", $text );
+
+    $attrs = '';
+  	foreach ($attributes as $attribute => $value) {
+  		$attrs .= " {$attribute}=\"{$value}\"";
+  	}
+
+  	$text = ' ' . $text;
+  	$text = preg_replace(
+  		'`([^"=\'>])((http|https|ftp)://[^\s<]+[^\s<\.)])`i',
+  		'$1<a href="$2"'.$attrs.'>$2</a>',
+  		$text
+  	);
+  	$text = substr($text, 1);
+
+  	return $text;
   }
 }

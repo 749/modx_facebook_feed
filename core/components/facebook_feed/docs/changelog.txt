@@ -1,14 +1,13 @@
-TODO
-====
-* add a chunk that will be displayed if an error occured
+
+Version 0.2.5-beta
+==================
+* Make links in fb messages clickable
+  https://github.com/749/modx_facebook_feed/issues/6
+
+Version 0.2.4-beta
+==================
+* add a chunk that will be displayed if an error occurred
   https://github.com/749/modx_facebook_feed/issues/4
-* improve the token request manager package
-
-
-Might do
-========
-* get the number of comments per post
-
 
 Version 0.2.3-beta
 ==================
@@ -20,7 +19,7 @@ Version 0.2.2-beta
 ==================
 * Fixed a bug where error message would get through to the snippet see
   https://github.com/749/modx_facebook_feed/issues/1
-  now all errors will be displayed in the modx error log
+  now all errors will be displayed in the ModX error log
 
 Version 0.2.1-beta
 ==================

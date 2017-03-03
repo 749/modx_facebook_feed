@@ -89,7 +89,7 @@ The default template for the snippet uses almost all fields available. The defau
 
 * ``[[+time_ago]]``
 
-  Will insert a nicely formated time since posted from the created_time field of facebook
+  Will insert a nicely formatted time since posted from the created_time field of facebook
 
 * ``[[+message]]``
 
