@@ -45,6 +45,15 @@ Further options are:
 
   Example: ``[[!FB_Feed? &page=`<your page id or shortname>` &limit=`6`]]``
 
+
+* ``&offset=`<number>` ``
+
+  This option allows you to define the number of results from the beginning you wish to ignore  
+  Maximum: 100 - <limit>
+  Default: 0
+
+  Example: ``[[!FB_Feed? &page=`<your page id or shortname>` &offset=`1`]]``
+
 * ``&authors=`<comma separated ids>` ``
 
   This option allows you to filter the feed of your page to only display certain authors  
