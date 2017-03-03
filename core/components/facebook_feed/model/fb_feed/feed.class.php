@@ -73,6 +73,10 @@ class Feed {
     ]);
   }
 
+  protected function callFBApi() {
+
+  }
+
   public function getTokenURL() {
     return 'https://graph.facebook.com/oauth/access_token?client_id=' . $this->config['app_id'] . '&client_secret=' . $this->app_secret . '&grant_type=client_credentials';
   }
@@ -218,7 +222,7 @@ class Feed {
 
     $fb = $this->initFB();
     try{
-      $response = $fb->get('/' . $config['page'] . '/feed?fields=full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=' . ($config['limit'] + $config['offset']));
+      $response = $fb->get('/' . $config['page'] . '/feed?fields=type,id,full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=100');
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
@@ -251,8 +255,12 @@ class Feed {
       }
       $i++;
       if($i <= $config['offset']) {
-        // ignore this post
+        // ignore this post if it is at the beginning and below the offset
         continue;
+      }
+      if($i > $config['offset'] + $config['limit']){
+        break;
+        //cutoff rest of the messages
       }
       $pinfo['message'] = $this->txt2link($pinfo['message'], array('target'=>'_blank', 'rel' => 'external nofollow'));
       $output .= $this->modx->getChunk($config['tpl'], $pinfo);
