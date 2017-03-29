@@ -3,6 +3,8 @@ Version 0.2.7-beta
 * Fixed bug in the call to the facebook API
 * Removed unnecessary code to get video information
 * Improved documentation on Github
+* Added Field with permalink to FB posts
+  https://github.com/749/modx_facebook_feed/issues/11
 
 Version 0.2.6-beta
 ==================
