@@ -1,6 +1,8 @@
 
 Version 0.2.6-beta
 ==================
+* Fixed access_token request to work with new Facebook API
+  https://github.com/749/modx_facebook_feed/issues/10
 * Added an offset property
   https://github.com/749/modx_facebook_feed/issues/3
 

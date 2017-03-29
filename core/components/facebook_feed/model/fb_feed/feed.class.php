@@ -85,6 +85,9 @@ class Feed {
     $identifier = 'access_token=';
     if(substr($token, 0, strlen($identifier)) === $identifier){
       $token = substr($token, strlen($identifier));
+    } else {
+      $data = json_decode($token);
+      $token = $data->access_token;
     }
     if(strlen($token) == 0){
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Error: Tried to install empty token');
