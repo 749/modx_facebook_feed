@@ -225,13 +225,16 @@ class Feed {
 
     $fb = $this->initFB();
     try{
-      $response = $fb->get('/' . $config['page'] . '/feed?fields=type,id,full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=100');
+      $url = '/' . $config['page'] . '/feed?fields=type,id,full_picture,source,from,created_time,message,name,description,story,likes.limit(2).summary(true),shares,link,permalink_url&summary=true&limit=80';
+      $response = $fb->get($url);
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
+      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Requested URL: '. $url);
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
       return $this->modx->getChunk($config['error_tpl']);
     } catch(Facebook\Exceptions\FacebookSDKException $e) {
       // When validation fails or other local issues
+      $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Requested URL: '. $url);
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Facebook SDK returned an error: ' . $e->getMessage());
       return $this->modx->getChunk($config['error_tpl']);
     }
@@ -244,7 +247,9 @@ class Feed {
       $pinfo['img'] = $post['full_picture'];
       $pinfo['name'] = $post['name'];
       $pinfo['from'] = $post['from']['name'];
+      $pinfo['video'] = $post['source'];
       $pinfo['link'] = $post['link'];
+      $pinfo['permalink_url'] = $post['permalink_url'];
       $pinfo['time_ago'] = $this->calcTimeAgo($post['created_time']);
       $pinfo['likes'] = $this->humanNumber($post['likes']['summary']['total_count']);
       $pinfo['shares'] = $this->humanNumber($post['shares']['count']);
@@ -264,20 +269,6 @@ class Feed {
       if($i > $config['offset'] + $config['limit']){
         break;
         //cutoff rest of the messages
-      }
-      if($post['type'] == 'video') {
-        //get more information about the video
-        try{
-          $response = $fb->get('/' . $post['id'] . '/feed?fields=type,full_picture,from,created_time,id,message,name,description,story,likes.limit(2).summary(true),shares,comments,link&summary=true&limit=100');
-          $data = $response->getDecodedBody()['data'];
-        }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
-          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
-          return $this->modx->getChunk($config['error_tpl']);
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
-          // When validation fails or other local issues
-          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Facebook SDK returned an error: ' . $e->getMessage());
-          return $this->modx->getChunk($config['error_tpl']);
-        }
       }
       $pinfo['message'] = $this->txt2link($pinfo['message'], array('target'=>'_blank', 'rel' => 'external nofollow'));
       $output .= $this->modx->getChunk($config['tpl'], $pinfo);

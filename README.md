@@ -92,6 +92,10 @@ The default template for the snippet uses almost all fields available. The defau
 
   Will insert the full url of the full_picture field of facebook
 
+* ``[[+video]]``
+
+  Will insert the full video url of the source field of facebook
+
 * ``[[+name]]``
 
   Will insert the publishers name from the name field of facebook
@@ -114,7 +118,11 @@ The default template for the snippet uses almost all fields available. The defau
 
 * ``[[+link]]``
 
-  Will insert the full link to the facebook page from the link field of facebook
+  Will insert the full link to the link in the post from the link field of facebook
+
+* ``[[+permalink_url]]``
+
+  Will insert the full link to the facebook post from the permalink_url field of facebook
 
 
 FAQ
