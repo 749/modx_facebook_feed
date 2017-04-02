@@ -282,7 +282,7 @@ class Feed {
           'page' => '',
           'limit' => 5,
           'tpl' => 'facebook_event_tpl',
-          'empty_tpl' => 'favebook_event_empty_tpl',
+          'empty_tpl' => 'facebook_event_empty_tpl',
           'error_tpl' => 'facebook_error_tpl',
       ), $scriptProperties);
 
@@ -311,9 +311,6 @@ class Feed {
 
       $i = 0;
       foreach ($data as $post) {
-          if(isset($authors) && !in_array($post['from']['id'], $authors)) {
-              continue;
-          }
           $pinfo = array();
           $pinfo['img'] = $post['picture']['url'];
           $pinfo['name'] = $post['name'];
