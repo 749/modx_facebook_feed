@@ -1,3 +1,8 @@
+Version 0.2.8-beta
+==================
+* Added an Events snippet to allow you to pull in facebook events
+  https://github.com/749/modx_facebook_feed/issues/12
+
 Version 0.2.7-beta
 ==================
 * Fixed bug in the call to the facebook API

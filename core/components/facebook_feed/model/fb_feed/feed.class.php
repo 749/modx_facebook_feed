@@ -277,6 +277,75 @@ class Feed {
     return $output;
   }
 
+  public function runEvents($scriptProperties) {
+      $config = array_merge(array(
+          'page' => '',
+          'limit' => 5,
+          'tpl' => 'facebook_event_tpl',
+          'empty_tpl' => 'favebook_event_empty_tpl',
+          'error_tpl' => 'facebook_error_tpl',
+      ), $scriptProperties);
+
+      if(empty($config['page'])) {
+          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'You have to give an id in the page parameter in order to use the snippet');
+          return $this->modx->getChunk($config['error_tpl']);
+      }
+
+      $fb = $this->initFB();
+      try{
+          $url = '/' . $config['page'] . '/events?fields=id,name,description,place,start_time,end_time,attending_count,declined_count,maybe_count,noreply_count,picture&limit=80';
+          $response = $fb->get($url);
+          $data = $response->getDecodedBody()['data'];
+      }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
+          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Requested URL: '. $url);
+          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Graph Error: ' . $fb_error->getMessage());
+          return $this->modx->getChunk($config['error_tpl']);
+      } catch(Facebook\Exceptions\FacebookSDKException $e) {
+          // When validation fails or other local issues
+          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Requested URL: '. $url);
+          $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Facebook SDK returned an error: ' . $e->getMessage());
+          return $this->modx->getChunk($config['error_tpl']);
+      }
+
+      $output = '';
+
+      $i = 0;
+      foreach ($data as $post) {
+          if(isset($authors) && !in_array($post['from']['id'], $authors)) {
+              continue;
+          }
+          $pinfo = array();
+          $pinfo['img'] = $post['picture']['url'];
+          $pinfo['name'] = $post['name'];
+          $pinfo['description'] = nl2br($post['description']);
+          $pinfo['place_name'] = $post['place']['name'];
+          $pinfo['place_street'] = $post['place']['location']['street'];
+          $pinfo['place_city'] = $post['place']['location']['city'];
+          $pinfo['place_zip'] = $post['place']['location']['zip'];
+          $pinfo['place_country'] = $post['place']['location']['country'];
+          $pinfo['place_latitude'] = $post['place']['location']['latitude'];
+          $pinfo['place_longitude'] = $post['place']['location']['longitude'];
+          $pinfo['start_time'] = $post['start_time'];
+          $pinfo['end_time'] = $post['end_time'];
+          $pinfo['attending_count'] = $this->humanNumber($post['attending_count']);
+          $pinfo['declined_count'] = $this->humanNumber($post['declined_count']);
+          $pinfo['maybe_count'] = $this->humanNumber($post['maybe_count']);
+          $pinfo['noreply_count'] = $this->humanNumber($post['noreply_count']);
+          if(strtotime($post['end_time']) < time()) {
+              continue;
+          }
+          $i++;
+          if($i > $config['limit']){
+              break;
+              //cutoff rest of the messages
+          }
+          $pinfo['description'] = $this->txt2link($pinfo['description'], array('target'=>'_blank', 'rel' => 'external nofollow'));
+          $output .= $this->modx->getChunk($config['tpl'], $pinfo);
+      }
+
+      return $output;
+  }
+
   function txt2link($text, $attributes){
   	// force http: on www.
    	$text = ereg_replace( "www\.", "http://www.", $text );

@@ -15,6 +15,15 @@ $snippet->set('description', 'A simple Facebook Feed component.');
 $snippet->set('snippet',file_get_contents($sources['source_core'].'/snippets/snippet.fb_feed.php'));
 
 $category->addMany($snippet);
+
+/* create the snippet */
+$snippet= $modx->newObject('modSnippet');
+$snippet->set('id',0);
+$snippet->set('name', 'FB_Events');
+$snippet->set('description', 'A simple Facebook Events component.');
+$snippet->set('snippet',file_get_contents($sources['source_core'].'/snippets/snippet.fb_events.php'));
+
+$category->addMany($snippet);
 unset($snippet);
 
 /* add chunks */
