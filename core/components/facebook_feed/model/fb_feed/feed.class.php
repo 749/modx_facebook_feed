@@ -343,6 +343,10 @@ class Feed {
           $output .= $this->modx->getChunk($config['tpl'], $pinfo);
       }
 
+      if($i <= 0) {
+          $output = $this->modx->getChunk($config['empty_tpl']);
+      }
+
       return $output;
   }
 
