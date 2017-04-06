@@ -1,3 +1,8 @@
+Version 0.2.9-beta
+==================
+* Fixed a bug when using php 7 or newer
+  https://github.com/749/modx_facebook_feed/issues/13
+
 Version 0.2.8-beta
 ==================
 * Added an Events snippet to allow you to pull in facebook events

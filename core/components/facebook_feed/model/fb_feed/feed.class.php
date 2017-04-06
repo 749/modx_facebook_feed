@@ -349,10 +349,10 @@ class Feed {
 
   function txt2link($text, $attributes){
   	// force http: on www.
-   	$text = ereg_replace( "www\.", "http://www.", $text );
+   	$text = preg_replace( '/www\./', "http://www.", $text );
   	// eliminate duplicates after force
-    	$text = ereg_replace( "http://http://www\.", "http://www.", $text );
-    	$text = ereg_replace( "https://http://www\.", "https://www.", $text );
+    $text = preg_replace( '`http://http://www\.`', "http://www.", $text );
+    $text = preg_replace( '`https://http://www\.`', "https://www.", $text );
 
     $attrs = '';
   	foreach ($attributes as $attribute => $value) {
