@@ -5,5 +5,5 @@
  * @package facebook_feed
  * @subpackage build
  */
-define('MODX_CORE_PATH', 'C:\\xampp\\htdocs\\modx\\core\\');
+define('MODX_CORE_PATH', dirname(__FILE__) . '/deps/modx/core/');
 define('MODX_CONFIG_KEY','config');

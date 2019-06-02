@@ -1,0 +1,39 @@
+<!--
+ This file is part of MODX Revolution.
+
+ Copyright (c) MODX, LLC. All Rights Reserved.
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+<modx>
+	<database_type>mysql</database_type>
+    <database_server>localhost</database_server>
+    <database>revo_test</database>
+    <database_user>revo</database_user>
+    <database_password></database_password>
+    <database_connection_charset>utf8</database_connection_charset>
+    <database_charset>utf8</database_charset>
+    <database_collation>utf8_general_ci</database_collation>
+    <table_prefix>modxtest_</table_prefix>
+    <https_port>443</https_port>
+    <http_host>localhost</http_host>
+
+    <!-- Set this to 1 if you are using MODX from Git or extracted it from the full MODX package to the server prior
+         to installation. -->
+    <inplace>1</inplace>
+
+    <!-- Set this to 1 if you have manually extracted the core package from the file core/packages/core.transport.zip.
+         This will reduce the time it takes for the installation process on systems that do not allow the PHP time_limit
+         and Apache script execution time settings to be altered. -->
+    <unpacked>0</unpacked>
+
+    <!-- The language to install MODX for. This will set the default manager language to this. Use IANA codes. -->
+    <language>en</language>
+
+    <!-- Information for your administrator account -->
+    <cmsadmin>admin</cmsadmin>
+    <cmspassword>password</cmspassword>
+    <cmsadminemail>email@address.com</cmsadminemail>
+    <remove_setup_directory>0</remove_setup_directory>
+</modx>

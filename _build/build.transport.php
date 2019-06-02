@@ -5,6 +5,10 @@
  * @package facebook_feed
  * @subpackage build
  */
+$package_name = 'facebook_feed';
+$package_version = '0.2.10';
+$package_release = 'beta';
+
 $mtime = microtime();
 $mtime = explode(" ", $mtime);
 $mtime = $mtime[1] + $mtime[0];
@@ -21,8 +25,11 @@ $sources= array (
     'lexicon' => $root . 'core/components/facebook_feed/lexicon/',
     'source_assets' => $root.'assets/components/facebook_feed',
     'docs' => $root.'core/components/facebook_feed/docs/',
+    'source_vendor_facebook' => $root.'vendor/facebook/graph-sdk/src/Facebook'
 );
 unset($root); /* save memory */
+
+$package_file = $package_name . '-'.$package_version . '-' . $package_release . '.transport.zip';
 
 require_once dirname(__FILE__) . '/build.config.php';
 
@@ -35,8 +42,8 @@ $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
-$builder->createPackage('facebook_feed','0.2.9','beta');
-$builder->registerNamespace('facebook_feed',false,true,'{core_path}components/facebook_feed/');
+$builder->createPackage($package_name, $package_version, $package_release);
+$builder->registerNamespace($package_name,false,true,'{core_path}components/facebook_feed/');
 
 /* load action/menu */
 $menu = include $sources['data'].'transport.menu.php';
@@ -101,6 +108,10 @@ $vehicle->resolve('file',array(
     'target' => "return MODX_CORE_PATH . 'components/';",
 ));
 $vehicle->resolve('file',array(
+    'source' => $sources['source_vendor_facebook'],
+    'target' => "return MODX_ASSETS_PATH . 'components/facebook_feed/model/';",
+));
+$vehicle->resolve('file',array(
     'source' => $sources['source_assets'],
     'target' => "return MODX_ASSETS_PATH . 'components/';",
 ));
@@ -124,6 +135,9 @@ $modx->log(modX::LOG_LEVEL_INFO,'Packaged in package attributes.'); flush();
 
 $modx->log(modX::LOG_LEVEL_INFO,'Packing...'); flush();
 $builder->pack();
+
+$modx->log( modX::LOG_LEVEL_INFO, 'moving to "_build/package/"');
+file_put_contents($sources['build'] . 'package/' . $package_file, fopen(MODX_CORE_PATH . 'packages/'. $package_file, 'r'));
 
 
 $mtime= microtime();
