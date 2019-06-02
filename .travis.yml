@@ -24,8 +24,6 @@ before_script:
 
 script:
 - php build.transport.php
-
-after_script:
 - cd ..
 
 deploy:
