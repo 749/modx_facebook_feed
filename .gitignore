@@ -128,3 +128,5 @@ modxextraid.txt
 vendor
 _build/deps/*
 _build/package/*
+
+!.gitkeep
