@@ -1,16 +1,16 @@
 language: php
 
 services:
-  - mysql
+- mysql
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
+- 5.4
+- 5.5
+- 5.6
+- 7.0
+- 7.1
+- 7.2
+- 7.3
 
 mysql:
   database: revo_test
@@ -18,19 +18,20 @@ mysql:
   encoding: utf8
 
 before_script:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS revo_test;'
-  - composer install
-  - cd _build/
-  - php unattended-modx-cli-install.php
+- mysql -e "CREATE USER 'revo'@'localhost' IDENTIFIED BY '';CREATE DATABASE IF NOT EXISTS revo_test; GRANT ALL PRIVILEGES ON revo_test.* TO 'revo'@'localhost'; FLUSH PRIVILEGES;"
+- composer install
+- cd _build/
+- php unattended-modx-cli-install.php
 
 script:
-  - php build.transport.php
+- php build.transport.php
 
 deploy:
   provider: releases
-  api_key: "GITHUB OAUTH TOKEN"
-  file: "_build/package/*.zip"
-  skip_cleanup: true
+  api_key:
+    secure: GVXd61OtA2WFxeneuwe3adqimzXRg71eVyhWjK5SK7ou15bU/Ns1r7GJdiIRzz1b/aiEwkMtXwkoynZxtlY1hmvUwbKFL5DDh+4MIAtb2sUibSvOx55BlA0G+89jqdpl1U0jQQsakcFIW5XGiZaIMI3BxpK0OVFthnnTJW1ifqmmZHE+3CsFMLYhZgu/g6T8MD6Mioc2RZKZrCj6IL8lEIgMpvHWMGTz0TsRtkmtrd/qa334Ze0VM9EqYR4WBZaIPtIy0+Q8/d4cwc1KOXPNooF9dHdQFZqFWy/e7hOvji8ow9ugWvBM8nqHwrM146JzM7E7wQ7/PdHY1rqA0JmTaYsvZkI5ynP2uLhiiJ5csr778lfHtojRLyuogb8KyDOLXAGG8oRhGG8I2L4Nxfr5LqDA2otLwcp3htMVbMP37xLrFAc/C/bqgPKC0nda/EeNGtoioOPgLjPfhS581o8VgpImUq7C98s3mDp//zE2aRY76jYvqqimRojli1s277C9dIKxLwx1ZJYBQ6kEGg+xy8f0WKOlT/hY2GpUES9zol+VlN26wf0QgNviOkjTqtF3UnU3yVtsr4rQ3jqe9hEiM1tyyd3xF48cQ6gG6CB0cT/M5UJHt+eipe34NbVyzXEkK/rtC8LX2mdwMfxxldNh32VX57Dg5SOfiD04YgErXNM=
+  file: _build/package/*.zip
   draft: true
   on:
+    repo: 749/modx_facebook_feed
     tags: true
