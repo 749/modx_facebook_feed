@@ -7,7 +7,7 @@ page.
 
 Requirements
 ------------
-* Tested with ModX 2.5.1
+* Tested with ModX 2.7.1
 * Needs PHP 5.4 or newer (Facebook API)
 
 
