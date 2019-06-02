@@ -250,6 +250,7 @@ class Feed {
       $pinfo['video'] = $post['source'];
       $pinfo['link'] = $post['link'];
       $pinfo['permalink_url'] = $post['permalink_url'];
+      $pinfo['created_time'] = $post['created_time'];
       $pinfo['time_ago'] = $this->calcTimeAgo($post['created_time']);
       $pinfo['likes'] = $this->humanNumber($post['likes']['summary']['total_count']);
       $pinfo['shares'] = $this->humanNumber($post['shares']['count']);
