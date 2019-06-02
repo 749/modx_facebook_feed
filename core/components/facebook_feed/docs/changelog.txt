@@ -1,3 +1,9 @@
+Version 0.2.10-beta
+===================
+* Update and repair the facebook api access
+* created_time field is now available: thank you @jenswittmann
+* automated the build
+
 Version 0.2.9-beta
 ==================
 * Fixed a bug when using php 7 or newer

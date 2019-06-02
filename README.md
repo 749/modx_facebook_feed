@@ -1,7 +1,7 @@
 # ModX Facebook Feed
 This piece of Software will allow you to add a Facebook Feed from one of your
 Facebook pages to your site. This is great for companies that want to update
-clients using the Facebook page, but not want an ugly Facebook widget on their
+clients using the Facebook page, but do not want an ugly Facebook widget on their
 page.
 
 

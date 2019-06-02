@@ -109,7 +109,7 @@ $vehicle->resolve('file',array(
 ));
 $vehicle->resolve('file',array(
     'source' => $sources['source_vendor_facebook'],
-    'target' => "return MODX_ASSETS_PATH . 'components/facebook_feed/model/';",
+    'target' => "return MODX_CORE_PATH . 'components/facebook_feed/model/';",
 ));
 $vehicle->resolve('file',array(
     'source' => $sources['source_assets'],
