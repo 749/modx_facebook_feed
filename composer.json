@@ -1,0 +1,9 @@
+{
+  "require": {
+    "facebook/graph-sdk": "^5.7",
+    "ext-simplexml": "*",
+    "ext-json": "*",
+    "ext-mysqli": "*",
+    "ext-curl": "*"
+  }
+}

@@ -1,7 +1,7 @@
 # [Deprecated] ModX Facebook Feed
 This piece of Software will allow you to add a Facebook Feed from one of your
 Facebook pages to your site. This is great for companies that want to update
-clients using the Facebook page, but not want an ugly Facebook widget on their
+clients using the Facebook page, but do not want an ugly Facebook widget on their
 page.
 
 > Due to the changes to the accessibility of "public" Facebook pages, which became
@@ -18,7 +18,7 @@ page.
 
 Requirements
 ------------
-* Tested with ModX 2.5.1
+* Tested with ModX 2.7.1
 * Needs PHP 5.4 or newer (Facebook API)
 
 
@@ -91,7 +91,7 @@ The default template for the snippet uses almost all fields available. The defau
 
 ```html
 <div class="post">
-  <img src="[[+img]]">
+  <img src="[[+img]]" alt="by [[+name]]">
   <p class="posted">by [[+name]] [[+time_ago]]</p>
   <p>[[+message]]</p>
   <p>Liked [[+likes]] times and shared [[+shares]] times. <a href="[[+link]]">View on Facebook</a></p>
@@ -113,6 +113,10 @@ The default template for the snippet uses almost all fields available. The defau
 * ``[[+time_ago]]``
 
   Will insert a nicely formatted time since posted from the created_time field of facebook
+
+* ``[[+created_time]]``
+
+  Will insert the non-formatted created_time field of facebook
 
 * ``[[+message]]``
 
@@ -178,7 +182,7 @@ The default template for the snippet some of the fields available. The default t
 
 ```html
 <div class="post">
-    <img src="[[+img]]">
+    <img src="[[+img]]" alt="by [[+name]]">
     <p>[[+name]] in [[+place_name]]</p>
     <p>[[+description]]</p>
     <p>From [[+start_time]] until [[+end_time]]</p>

@@ -226,7 +226,7 @@ class Feed {
     $fb = $this->initFB();
     try{
       $url = '/' . $config['page'] . '/feed?fields=type,id,full_picture,source,from,created_time,message,name,description,story,likes.limit(2).summary(true),shares,link,permalink_url&summary=true&limit=80';
-      $response = $fb->get($url);
+      $response = $fb->get($url, $this->access_token);
       $data = $response->getDecodedBody()['data'];
     }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
       $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Requested URL: '. $url);
@@ -250,6 +250,7 @@ class Feed {
       $pinfo['video'] = $post['source'];
       $pinfo['link'] = $post['link'];
       $pinfo['permalink_url'] = $post['permalink_url'];
+      $pinfo['created_time'] = $post['created_time'];
       $pinfo['time_ago'] = $this->calcTimeAgo($post['created_time']);
       $pinfo['likes'] = $this->humanNumber($post['likes']['summary']['total_count']);
       $pinfo['shares'] = $this->humanNumber($post['shares']['count']);
@@ -294,7 +295,7 @@ class Feed {
       $fb = $this->initFB();
       try{
           $url = '/' . $config['page'] . '/events?fields=id,name,description,place,start_time,end_time,attending_count,declined_count,maybe_count,noreply_count,picture&limit=80';
-          $response = $fb->get($url);
+          $response = $fb->get($url, $this->access_token);
           $data = $response->getDecodedBody()['data'];
       }catch(Facebook\Exceptions\FacebookResponseException $fb_error) {
           $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Requested URL: '. $url);
