@@ -1,8 +1,19 @@
-# ModX Facebook Feed
+# [Deprecated] ModX Facebook Feed
 This piece of Software will allow you to add a Facebook Feed from one of your
 Facebook pages to your site. This is great for companies that want to update
 clients using the Facebook page, but not want an ugly Facebook widget on their
 page.
+
+> Due to the changes to the accessibility of "public" Facebook pages, which became
+> binding on Sept 4th 2019, it is required to have a business account with FB.
+>
+> I have tried to get one for a client of mine but stopped trying after about six months
+> of back and forth, it was too much work for the benefit.
+>
+> Which is why I have to announce that I won't be supporting this plugin anymore.
+> I will still merge PRs if they come in, will however not actively work on it
+>
+> Greeting 749
 
 
 Requirements
